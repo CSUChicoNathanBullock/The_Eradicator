@@ -6,6 +6,12 @@ public class Bullet : MonoBehaviour
 {
     private float Bullet_speed = 4f;
 
+    private void OnEnable()
+    {
+        StartCoroutine(DestroyBulletAfterTime());
+    }//OnEnable
+    
+
     IEnumerator DestroyBulletAfterTime()
     {
         yield return new WaitForSeconds(2f);
@@ -15,7 +21,7 @@ public class Bullet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(Vector3.up * Bullet_speed * Time.deltaTime);
+        transform.Translate(Vector3.forward * Bullet_speed * Time.deltaTime);
     }//Update
 
     private void OnTriggerEnter(Collider other)

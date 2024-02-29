@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class TD_Player_Controller : MonoBehaviour
 {
@@ -13,7 +14,11 @@ public class TD_Player_Controller : MonoBehaviour
     [SerializeField]
     private Transform Bullet_Direction;
     private bool canShoot = true;
-    private Camera main;
+    public Camera Cam;
+
+    private Vector2 mousePos;
+
+    public Rigidbody body;
 
     private PlayerControls controls;
 
@@ -32,20 +37,23 @@ public class TD_Player_Controller : MonoBehaviour
         controls.Disable();
     }//OnDisable
 
+    
+
     void Start()
     {
-        main = Camera.main;
+        Cam = Camera.main;
         controls.Player.Shoot.performed += _ => PlayerShoot();
     }//Start
 
     private void PlayerShoot()
     {
         if (!canShoot) return;
+
         
 
-
-            Vector2 MousePosition = controls.Player.MousePosition.ReadValue<Vector2>();
-            MousePosition = Camera.main.ScreenToWorldPoint(MousePosition);
+            Vector2 mousePosition = controls.Player.MousePosition.ReadValue<Vector2>();
+            mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
+            //Debug.Log("mouse position is " + mousePosition);
             GameObject g = Instantiate(Bullet, Bullet_Direction.position, Bullet_Direction.rotation);
             g.SetActive(true);
         StartCoroutine(CanShoot());
@@ -64,20 +72,50 @@ public class TD_Player_Controller : MonoBehaviour
     void Update()
     {
 
-        
+
 
         //Rotation
-        Vector2 mouseScreenPosition = controls.Player.MousePosition.ReadValue<Vector2>();
-        Vector3 MouseWorldPosition = main.ScreenToWorldPoint(mouseScreenPosition);
-        Vector3 targetDirection = MouseWorldPosition - transform.position;
-        float angle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, angle) );
-        //Debug.Log("Mouse position is: " + mouseScreenPosition);
+        //RotateGun();
 
         //Movement
-        Vector3 movement = controls.Player.Movement.ReadValue<Vector2>() * Movement_Velocity;
-        transform.position += movement * Time.deltaTime;
+        MovePlayer();
 
     }//Update
+
+    private void FixedUpdate()
+    {
+        RotateGun();
+    }//FixedUpdate
+
+    private void MovePlayer()
+    {
+        Vector3 movement = controls.Player.Movement.ReadValue<Vector2>() * Movement_Velocity;
+        transform.position += new Vector3(movement.x, 0, movement.y) * Time.deltaTime;
+    }//MovePlayer
+
+    private void RotateGun()
+    {
+
+        Vector2 mouseScreenPosition = controls.Player.MousePosition.ReadValue<Vector2>();
+
+        RaycastHit hit;
+        Ray ray = Cam.ScreenPointToRay(Input.mousePosition); //Input.mousePosition
+        if(Physics.Raycast(ray, out hit))
+        {
+            if(hit.point.y <= transform.position.y)
+            {
+                Vector3 hitPoint = hit.point;
+                hitPoint.y = transform.position.y;
+                transform.LookAt(hitPoint);
+            }//if
+        }//if
+
+
+
+
+
+    }//RotateGun
+
+
 
 }//TD_Player_Controller
