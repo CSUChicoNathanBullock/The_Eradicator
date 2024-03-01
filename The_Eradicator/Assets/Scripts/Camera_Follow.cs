@@ -2,24 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Camera_Follow : MonoBehaviour
+public class CamFollow : MonoBehaviour
 {
-    public float Camera_Distance;
-    public float Camera_Height;
-    public float Camera_Speed;
-
-    public GameObject target;
+    [SerializeField] private Vector3 offset;
+    [SerializeField] private float damping;
 
 
-    // Update is called once per frame
-    private void Update()
-    {
-        
-    }//Update
+    public Transform target;
+
+    private Vector3 velocity = Vector3.zero;
 
     private void FixedUpdate()
     {
-        
+        if (target != null)
+        {
+            Vector3 targetposition = target.position + offset;
+            //targetposition.z = transform.position.z;
+
+            transform.position = Vector3.SmoothDamp(transform.position, targetposition, ref velocity, damping);
+            
+            
+        }//if
     }//FixedUpdate
 
-}//Camera_Follow
+    
+
+}//CamFollow

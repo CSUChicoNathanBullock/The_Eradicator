@@ -15,10 +15,8 @@ public class TD_Player_Controller : MonoBehaviour
     private Transform Bullet_Direction;
     private bool canShoot = true;
     public Camera Cam;
-
-    private Vector2 mousePos;
-
-    public Rigidbody body;
+   
+    
 
     private PlayerControls controls;
 
