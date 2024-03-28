@@ -17,11 +17,7 @@ public class Enemy : MonoBehaviour
             Destroy(other.gameObject);
         }//if
 
-        else if (other.tag == "Player")
-        {
-            Destroy(other.gameObject);
-            
-        }//else if
+        
     }//OnTriggerEnter
 
 

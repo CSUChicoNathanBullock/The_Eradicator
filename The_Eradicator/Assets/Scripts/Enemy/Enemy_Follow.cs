@@ -18,8 +18,8 @@ public class Enemy_Follow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Chase();
-        enemy.SetDestination(player.position);
+        Chase();
+        //enemy.SetDestination(player.position);
     }//Update
 
 
@@ -28,7 +28,7 @@ public class Enemy_Follow : MonoBehaviour
         float distance = Vector3.Distance(transform.position, player.position);
         //Debug.Log("Distance is: " + distance);
 
-        if(Target_range < distance)
+        if(Target_range > distance)
         {
             Debug.Log("Chasing player!");
             enemy.SetDestination(player.position);

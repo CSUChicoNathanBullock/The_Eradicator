@@ -3,8 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Win_Scene_Script : MonoBehaviour
+public class Game_Over_Scene : MonoBehaviour
 {
+    public void Restart()
+    {
+        SceneManager.LoadScene("Tutorial");
+    }//Restart
+
     public void Feedback()
     {
         //Add URL
@@ -18,4 +23,4 @@ public class Win_Scene_Script : MonoBehaviour
 
     }//Exit_Game
 
-}//Win_Scene_Script
+}//Game_Over_Script

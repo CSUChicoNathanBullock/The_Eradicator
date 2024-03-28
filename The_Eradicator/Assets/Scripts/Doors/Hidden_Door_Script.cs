@@ -19,13 +19,16 @@ public class Hidden_Door_Script : MonoBehaviour
     {
         if (other.tag == "Bullet")
         {
-            Move();
+            Destroy(gameObject);
+            Destroy(other.gameObject);
+
+            //Move();
             //Debug.Log("Moving door");
-            StartCoroutine(DestroyDoorAfterTime());
+           // StartCoroutine(DestroyDoorAfterTime());
         }//if
 
     }//OnTriggerEnter
-
+    /*
     IEnumerator DestroyDoorAfterTime()
     {
         yield return new WaitForSeconds(2f);
@@ -53,5 +56,5 @@ public class Hidden_Door_Script : MonoBehaviour
             this.transform.position = value;
         }//set
     }//pos
-
+    */
 }//Hidden_Door_Script
