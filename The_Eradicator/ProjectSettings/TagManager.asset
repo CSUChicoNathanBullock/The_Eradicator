@@ -9,6 +9,10 @@ TagManager:
   - Yellow_Key
   - Enemy
   - Bullet
+  - Sniper_Bullet
+  - Sniper
+  - Shotgun
+  - Wall
   layers:
   - Default
   - TransparentFX

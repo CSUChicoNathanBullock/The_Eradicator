@@ -17,7 +17,7 @@ public class Hidden_Door_Script : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Bullet")
+        if (other.tag == "Bullet" || other.tag == "Sniper_Bullet")
         {
             Destroy(gameObject);
             Destroy(other.gameObject);
