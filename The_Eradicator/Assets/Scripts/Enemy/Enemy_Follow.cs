@@ -30,7 +30,7 @@ public class Enemy_Follow : MonoBehaviour
 
         if(Target_range > distance)
         {
-            Debug.Log("Chasing player!");
+            //Debug.Log("Chasing player!");
             enemy.SetDestination(player.position);
         }//if
         

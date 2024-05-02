@@ -13,6 +13,11 @@ TagManager:
   - Sniper
   - Shotgun
   - Wall
+  - Small_Healthpack
+  - Medium_Healthpack
+  - Large_Healthpack
+  - Small_Med
+  - Healthpack
   layers:
   - Default
   - TransparentFX

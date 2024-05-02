@@ -13,6 +13,9 @@ public class Enemy : MonoBehaviour
     //[SerializeField] private Transform target;
     private Bullet bulletDmg;
     private Sniper_Bullet_Code SniperbulletDmg;
+
+    public float Player_Damage;
+
     private void Awake()
     {
         healthbar = GetComponentInChildren<Enemy_Health_Bar>();

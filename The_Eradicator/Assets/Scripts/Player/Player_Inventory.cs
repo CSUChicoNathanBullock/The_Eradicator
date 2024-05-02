@@ -11,22 +11,22 @@ public class Player_Inventory : MonoBehaviour
     public bool Blue_Key = false;
     public bool Yellow_Key = false;
 
-    //private bool Player_Alive = true;
-
     public bool Has_Shotgun = false;
     public bool Has_Sniper = false;
 
-
-    //public Shoot_Script check_shotgun;
-
-    //[SerializeField] public Text Health_Text;
+    public float Player_Damage;
+    public float Health_Up;
+    
+    private Enemy playerDmg;
+    private HealthPack_Script playerHeal;
 
     //public float Current_Health;
     //private float Max_Health = 100f;
 
     [SerializeField] float Health, Max_Health = 100f;
 
-    [SerializeField] Enemy_Health_Bar healthbar;
+    
+    [SerializeField] Player_Healthbar_Script healthbar;
 
 
     private void Start()
@@ -35,47 +35,47 @@ public class Player_Inventory : MonoBehaviour
         Has_Sniper = false;
         Health = Max_Health;
         //Health_Text.text = "Health: " + Current_Health;
+
     }//Start
 
 
 
     private void Awake()
     {
-        healthbar = GetComponentInChildren<Enemy_Health_Bar>();
+        healthbar = GetComponentInChildren<Player_Healthbar_Script>();
+        Health = Max_Health;
     }//Awake
+
+
     private void OnTriggerEnter(Collider other)
     {
         
         if (other.tag == "Red_Key")
         {
             Red_key = true;
-            Destroy(other.gameObject);
         }//if
 
         if (other.tag == "Blue_Key")
         {
             Blue_Key = true;
-            Destroy(other.gameObject);
         }//if
 
         if (other.tag == "Yellow_Key")
         {
             Yellow_Key = true;
-            Destroy(other.gameObject);
         }//if
 
-        /*
+       
         if (other.tag == "Enemy")
         {
-            Current_Health -= 10f;
-
-            if(Current_Health <= 0f)
-            {
-                Game_Over();
-            }//if
+            //Debug.Log("Hitting Enemy");
+            
+            playerDmg = other.GetComponent<Enemy>();
+           
+            Damage_Player(playerDmg.Player_Damage);
             
         }//if
-        */
+        
         
         if (other.tag == "Sniper")
         {
@@ -101,22 +101,21 @@ public class Player_Inventory : MonoBehaviour
             }//if
 
 
-        if(other.tag == "Small_Healthpack")
+        if(other.tag == "Healthpack")
             {
-                Health += 5f;
-                if(Health >= Max_Health)
-                {
-                    Health = Max_Health;
-                }//if
+                Debug.Log("Hitting Health");
+               
+                playerHeal = other.GetComponent<HealthPack_Script>();
+                Heal_Player(playerHeal.Player_Heal);
+                
             }//if
-
+        /*
         if (other.tag == "Medium_Healthpack")
             {
-                Health += 15f;
-                if (Health >= Max_Health)
-                {
-                    Health = Max_Health;
-                }//if
+                Debug.Log("Player health is:" + Health);
+                Health_Up = 100;
+                Heal_Player(Health_Up);
+                Health_Up = 0;
             }//if
         if (other.tag == "Large_Healthpack")
             {
@@ -126,26 +125,12 @@ public class Player_Inventory : MonoBehaviour
                     Health = Max_Health;
                 }//if
             }//if
+            */
         }//if
         
         
 
     }//OnTriggerEnter
-
-
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.tag == "Enemy")
-        {
-            Health -= 10f;
-
-            if (Health <= 0f)
-            {
-                Game_Over();
-            }//if
-
-        }//if
-    }//OnTriggerStay
 
 
     
@@ -163,11 +148,27 @@ public class Player_Inventory : MonoBehaviour
         
     }//Game_Over
 
-    /*
-    public void Set_Health()
+    public void Damage_Player(float Player_Damage)
     {
-        Health_Text.text = "Health: " + Current_Health;
-    }//Set_Health
-    */
+        
+        Health -= Player_Damage;
+        healthbar.Health_Update(Health, Max_Health);
+        if (Health <= 0)
+        {
+            Destroy(this.gameObject);
+            Game_Over();
+        }//if
+    }//Damage_Player
+
+
+    public void Heal_Player(float Player_Heal)
+    {
+        Health += Player_Heal;
+        healthbar.Health_Update(Health, Max_Health);
+        if (Health >= Max_Health)
+        {
+            Health = Max_Health;
+        }//if
+    }//Heal_Player
 
 }//Player_Inventory
