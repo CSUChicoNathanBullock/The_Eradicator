@@ -8,7 +8,7 @@ public class Sniper_Bullet_Code : MonoBehaviour
     private int limit = 3;
     public int Sniper_Damage;
 
-    private float Sniper_Bullet_speed = 10f;
+    private float Sniper_Bullet_speed = 12f;
 
     private void OnEnable()
     {

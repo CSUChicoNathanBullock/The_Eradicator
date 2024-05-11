@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    private float Bullet_speed = 7f;
+    private float Bullet_speed = 10f;
     public float Bullet_Damage;
 
     private void OnEnable()
